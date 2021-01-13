@@ -1,0 +1,210 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>trifenix.connect.mdm.search.model</name>
+    </assembly>
+    <members>
+        <member name="T:trifenix.connect.mdm.search.model.BaseFacetableProperty`1">
+            <summary>
+            Implementación para azure search
+            con el elemento base para propiedades que incluyen
+            facets, como enumeraciones, entidades y fechas.
+            </summary>
+            <typeparam name="T">Tipo de valor que tiene asignado la propiedad (bool, num, etc.)</typeparam>
+        </member>
+        <member name="P:trifenix.connect.mdm.search.model.BaseFacetableProperty`1.facet">
+            <summary>
+            facet, ver interface para más documentación
+            </summary>
+        </member>
+        <member name="T:trifenix.connect.mdm.search.model.BaseProperty`1">
+            <summary>
+            Clase base para las propiedades, 
+            este incluye el índice que permitirá identificar la propiedad 
+            y el valor que será determinado por quién herede o use la clase.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:trifenix.connect.mdm.search.model.BaseProperty`1.index">
+            <summary>
+            índice de una propiedad, junto con el diccionario podrá identificar la propiedad. 
+            </summary>
+        </member>
+        <member name="P:trifenix.connect.mdm.search.model.BaseProperty`1.value">
+            <summary>
+            valor que tendrá esa propiedad.
+            el elemento T determina el tipo de valor,
+            estos pueden ser bool, int, long, datetime, double, geo, etc.
+            </summary>
+        </member>
+        <member name="T:trifenix.connect.mdm.search.model.BoolProperty">
+            <summary>
+            Propiedad de tipo bool que incluye el índice y el valor de tipo bool.
+            </summary>
+        </member>
+        <member name="T:trifenix.connect.mdm.search.model.DblProperty">
+            <summary>
+            Propiedad de tipo doble, con el índice y el valor de tipo double.
+            </summary>
+        </member>
+        <member name="T:trifenix.connect.mdm.search.model.DtProperty">
+            <summary>
+            Propiedad de tipo fecha, que mantiene el índice de la propiedad y el valor de tipo fecha.
+            </summary>
+        </member>
+        <member name="T:trifenix.connect.mdm.search.model.EntitySearch">
+            <summary>
+            Implementación de azure search de modelo de entidades 
+            de fenix mdm.
+            Esta implementación añade metadata que permitirá optimizar las busquedas 
+            según el tipo de propiedad.
+            esta entidad es un contenedor de valores de una clase. 
+            donde con un diccionario es posible identificar los valores que encuentran en estos contenedores.
+            a través de un modelo de atributos, originamos una metadata que permite poder crear 
+            una estructura de elementos indexados para lecturas de alta velocidad
+            y que permite crear una arquitectura de componentes tanto para web o móvil, que 
+            consulten a este modelo sin necesidad de conocer el negocio en el que será implementado.
+            esta clase busca mantener arrays por cada tipo de dato para poder mejorar las busquedas.
+            ocupar poco espacio, por eso los nombres cortos.
+            sin embargo, incluso al guardar una entidad vacia, se generarán los arrays vacios, que ocupan espacio.
+            por otro lado, los valores nulos no son incluidos en este modelo.
+            si se identifica una entidad con el índice de una clase, las propiedades que no tengan valores en este modelo
+            se entenderán como nulas.
+            </summary>
+        </member>
+        <member name="P:trifenix.connect.mdm.search.model.EntitySearch.id">
+            <summary>
+            Identificador de la entidad. 
+            aquí asignarémos por regla general un guid que identifique a la entidad
+            </summary>
+        </member>
+        <member name="P:trifenix.connect.mdm.search.model.EntitySearch.index">
+            <summary>
+            índice que será usado con un diccionario para identificar el elemento.
+            por ejemplo, 
+            si un elemento es una persona, el índice será igual a 1, que es el índice que el diccionario tiene para persona.
+            </summary>
+        </member>
+        <member name="P:trifenix.connect.mdm.search.model.EntitySearch.created">
+            <summary>
+            Fecha de creación, esto no está siendo utilizado aún,
+            se tiene la idea de usarlo como ttl, pero hay que investigar acerca de la 
+            metadata propia de azure, la cual podría tener un timestamp para hacer operaciones de este tipo.
+            </summary>
+        </member>
+        <member name="P:trifenix.connect.mdm.search.model.EntitySearch.rel">
+            <summary>
+            propiedad que referencia otras entidades, 
+            estas entidades son identificados por su índice y su valor.
+            esta propiedad relaciona entidades, como una profesor y sus salas o
+            una especie de una fruta a sus variedades.
+            esta propiedad implementa facet por lo que permite agrupación de busquedas.
+            </summary>
+        </member>
+        <member name="P:trifenix.connect.mdm.search.model.EntitySearch.sug">
+            <summary>
+            todas las propiedades que sean asignadas como suggest,
+            serán utilizadas para autocompletado o sugerencias de busqueda
+            esto permite mejorar las busquedas, pero también aumentará el tamaño de la base de datos.
+            </summary>
+        </member>
+        <member name="P:trifenix.connect.mdm.search.model.EntitySearch.str">
+            <summary>
+            colección de valores de tipo cadena de texto.
+            </summary>
+        </member>
+        <member name="P:trifenix.connect.mdm.search.model.EntitySearch.enm">
+            <summary>
+            colección de valores de tipo enumeración,
+            este tipo de propiedad es de tipo facetable por tanto se puede agrupar por valor de la enumeración.
+            </summary>
+        </member>
+        <member name="P:trifenix.connect.mdm.search.model.EntitySearch.num32">
+            <summary>
+            colección de propiedades de tipo entero.
+            </summary>
+        </member>
+        <member name="P:trifenix.connect.mdm.search.model.EntitySearch.num64">
+            <summary>
+            colección de propiedades de tipo long.
+            </summary>
+        </member>
+        <member name="P:trifenix.connect.mdm.search.model.EntitySearch.dbl">
+            <summary>
+            colección de propiedades de tipo doble.
+            </summary>
+        </member>
+        <member name="P:trifenix.connect.mdm.search.model.EntitySearch.dt">
+            <summary>
+            colección de propiedades de tipo fecha.
+            </summary>
+        </member>
+        <member name="P:trifenix.connect.mdm.search.model.EntitySearch.geo">
+            <summary>
+            colección de propiedades de tipo geo.
+            </summary>
+        </member>
+        <member name="P:trifenix.connect.mdm.search.model.EntitySearch.bl">
+            <summary>
+            colección de propiedades de tipo bool.
+            </summary>
+        </member>
+        <member name="T:trifenix.connect.mdm.search.model.EnumProperty">
+            <summary>
+            Propiedad de tipo enum,
+            este tipo de propiedad incluye facets.
+            </summary>
+        </member>
+        <member name="T:trifenix.connect.mdm.search.model.GeoProperty">
+            <summary>
+            Propiedad de tipo Coordenada,
+            esto permite realizar busqueda de mapas en azure search.
+            </summary>
+        </member>
+        <member name="T:trifenix.connect.mdm.search.model.Num32Property">
+            <summary>
+            Propiedad de tipo Entero
+            </summary>
+        </member>
+        <member name="T:trifenix.connect.mdm.search.model.Num64Property">
+            <summary>
+            Propiedad de tipo long.
+            </summary>
+        </member>
+        <member name="T:trifenix.connect.mdm.search.model.RelatedId">
+            <summary>
+            Implementación para azure de una propiedad para entidades relacionadas
+            con un entity search.
+            </summary>
+        </member>
+        <member name="P:trifenix.connect.mdm.search.model.RelatedId.index">
+            <summary>
+            índice de una entidad
+            </summary>
+        </member>
+        <member name="P:trifenix.connect.mdm.search.model.RelatedId.id">
+            <summary>
+            identificador de una entidad
+            </summary>
+        </member>
+        <member name="P:trifenix.connect.mdm.search.model.RelatedId.facet">
+            <summary>
+            facet que incluye el identificador de la entidad y la id para busquedas agrupadas
+            en azure search.
+            </summary>
+        </member>
+        <member name="T:trifenix.connect.mdm.search.model.StrProperty">
+            <summary>
+            Propiedad de un string,
+            mantiene un índice y un valor de tipo string.
+            </summary>
+        </member>
+        <member name="P:trifenix.connect.mdm.search.model.StrProperty.value">
+            <summary>
+            se sobrescribe la propiedad valor, dado que a diferencia del base
+            string debe incluír busqueda,
+            revisar baseProperty para ver valor original.
+            </summary>
+        </member>
+    </members>
+</doc>
