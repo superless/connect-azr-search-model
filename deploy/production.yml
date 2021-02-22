@@ -20,7 +20,12 @@ variables:
 pr: none
   
 steps:
-
+  - task: SonarQubePrepare@4
+    inputs:
+      SonarQube: 'AGROFENIX-connect-azr-search-model'
+      scannerMode: 'MSBuild'
+      projectKey: 'AGROFENIX-connect-azr-search-model'
+      projectName: 'AGROFENIX-connect-azr-search-model'
   - task: gitversion/setup@0
     inputs:
       versionSpec: '5.1'
