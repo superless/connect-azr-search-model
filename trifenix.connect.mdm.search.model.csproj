@@ -54,10 +54,10 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Search.Documents" Version="11.1.1" />
-    <PackageReference Include="Microsoft.Spatial" Version="7.8.1" />
+    <PackageReference Include="Azure.Search.Documents" Version="11.2.0" />
+    <PackageReference Include="Microsoft.Spatial" Version="7.8.2" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-    <PackageReference Include="trifenix.connect" Version="0.8.75" />
+    <PackageReference Include="trifenix.connect.mdm" Version="0.8.155" />
     
   </ItemGroup>
 
