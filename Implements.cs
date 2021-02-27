@@ -1,6 +1,6 @@
 ﻿
 using Microsoft.Spatial;
-using Newtonsoft.Json;
+
 using System;
 using System.ComponentModel.DataAnnotations;
 using trifenix.connect.search_mdl;
